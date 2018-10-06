@@ -1,26 +1,28 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import Root from "./Root";
+import SearchAppBar from "./commons/SearchAppBar";
+import LinearProgressCustom from "./commons/LinearProgressCustom";
+import DataTable from "./commons/DataTable";
+import FormHeroEdit from "./commons/FormHeroEdit";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React or Not! Or yes!
-          </a>
-        </header>
-      </div>
+      <Root>
+        <div className="App">
+          <LinearProgressCustom />
+          <header>
+            <SearchAppBar />
+          </header>
+          <main>
+            <DataTable />
+          </main>
+          <footer>
+            <FormHeroEdit />
+          </footer>
+        </div>
+      </Root>
     );
   }
 }
