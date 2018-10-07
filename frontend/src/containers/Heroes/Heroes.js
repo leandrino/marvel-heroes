@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -14,6 +15,7 @@ import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import { Avatar } from "@material-ui/core";
 import PaperDefault from "../../commons/PaperDefault/PaperDefault";
+import { fetchHeroesList } from "../../redux-flow/reducers/heroes/action-creators";
 
 const actionsStyles = theme => ({
   root: {
@@ -102,12 +104,6 @@ const TablePaginationActionsWrapped = withStyles(actionsStyles, {
   withTheme: true
 })(TablePaginationActions);
 
-let counter = 0;
-function createData(name, calories, fat) {
-  counter += 1;
-  return { id: counter, name, calories, fat };
-}
-
 const styles = theme => ({
   root: {
     margin: theme.spacing.unit * 4
@@ -125,24 +121,13 @@ const styles = theme => ({
 
 class Heroes extends React.Component {
   state = {
-    rows: [
-      createData("Cupcake", 305, 3.7),
-      createData("Donut", 452, 25.0),
-      createData("Eclair", 262, 16.0),
-      createData("Frozen yoghurt", 159, 6.0),
-      createData("Gingerbread", 356, 16.0),
-      createData("Honeycomb", 408, 3.2),
-      createData("Ice cream sandwich", 237, 9.0),
-      createData("Jelly Bean", 375, 0.0),
-      createData("KitKat", 518, 26.0),
-      createData("Lollipop", 392, 0.2),
-      createData("Marshmallow", 318, 0),
-      createData("Nougat", 360, 19.0),
-      createData("Oreo", 437, 18.0)
-    ].sort((a, b) => (a.calories < b.calories ? -1 : 1)),
     page: 0,
     rowsPerPage: 5
   };
+
+  componentDidMount() {
+    return this.props.fetchHeroes();
+  }
 
   handleChangePage = (event, page) => {
     this.setState({ page });
@@ -153,33 +138,35 @@ class Heroes extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { rows, rowsPerPage, page } = this.state;
+    const { classes, heroes } = this.props;
+    const { rowsPerPage, page } = this.state;
     const emptyRows =
-      rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+      rowsPerPage - Math.min(rowsPerPage, heroes.length - page * rowsPerPage);
 
     return (
       <PaperDefault className={classes.root}>
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <TableBody>
-              {rows
+              {heroes
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(row => {
+                .map(hero => {
                   return (
-                    <TableRow key={row.id}>
-                      <TableCell colSpan={0} component="th" scope="row">
+                    <TableRow key={hero.id}>
+                      <TableCell component="th" scope="row">
                         <Avatar
                           alt="Remy Sharp"
-                          src="http://i.annihil.us/u/prod/marvel/i/mg/6/e0/53176e979cca2.jpg"
+                          src={`${hero.thumbnail.path}.${
+                            hero.thumbnail.extension
+                          }`}
                           className={classes.avatar}
                         />
                       </TableCell>
-                      <TableCell colSpan={0}>{row.name}</TableCell>
-                      <TableCell colSpan={1} numeric>
-                        {row.calories} asdasdas
+                      <TableCell>{hero.name}</TableCell>
+                      <TableCell>
+                        {hero.description}
                       </TableCell>
-                      <TableCell colSpan={1}>{row.fat}</TableCell>
+                      <TableCell>{hero.id}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -193,7 +180,7 @@ class Heroes extends React.Component {
               <TableRow>
                 <TablePagination
                   colSpan={4}
-                  count={rows.length}
+                  count={heroes.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   onChangePage={this.handleChangePage}
@@ -213,4 +200,18 @@ Heroes.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Heroes);
+const mapStateToProps = state => ({
+  heroes: state.heroes.list || [],
+  pagination: state.heroes.pagination
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchHeroes: () => {
+    dispatch(fetchHeroesList());
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Heroes));
