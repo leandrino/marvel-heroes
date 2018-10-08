@@ -18,8 +18,8 @@ describe("Heroes.service.js", () => {
     it("should listHeroesService call correct url", async () => {
       expect.assertions(1);
       const { listHeroesService } = require("./Heroes.service");
-      await listHeroesService().then(data =>
-        expect(data.url).toEqual("/characters")
+      await listHeroesService(10, 10).then(data =>
+        expect(data.url).toEqual("/characters?limit=10&offset=10&")
       );
     });
   });
