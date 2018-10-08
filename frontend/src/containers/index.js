@@ -3,15 +3,21 @@ import { connect } from "react-redux";
 import Loadable from "react-loadable";
 import LinearProgressCustom from "../commons/LinearProgressCustom/LinearProgressCustom";
 
+const LoadableHome = Loadable({
+  loader: () => import("./Home" /* webpackChunkName: 'home' */),
+  loading: LinearProgressCustom
+});
+
 const LoadableHeroes = Loadable({
-  loader: () => import("./Heroes"/* webpackChunkName: 'heroes' */),
+  loader: () => import("./Heroes" /* webpackChunkName: 'heroes' */),
   loading: LinearProgressCustom
 });
 
 const LoadableAppBar = Loadable({
-  loader: () => import("../commons/SearchAppBar"/* webpackChunkName: 'appBar' */),
+  loader: () =>
+    import("../commons/SearchAppBar" /* webpackChunkName: 'appBar' */),
   loading: LinearProgressCustom
-})
+});
 
 const Containers = ({ fetchingHeroes }) => (
   <Fragment>
@@ -20,6 +26,7 @@ const Containers = ({ fetchingHeroes }) => (
       <LoadableAppBar />
     </header>
     <main>
+      <LoadableHome />
       <LoadableHeroes />
     </main>
     <footer>
