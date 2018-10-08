@@ -22,6 +22,11 @@ const Containers = ({ fetchingHeroes }) => (
     <main>
       <LoadableHeroes />
     </main>
+    <footer>
+      <small>
+        <a href="http://marvel.com">Data provided by Marvel. © 2018 MARVEL</a>
+      </small>
+    </footer>
   </Fragment>
 );
 
