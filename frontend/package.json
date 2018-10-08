@@ -22,8 +22,9 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "configure-environment": "node configure-environment.js src/constants/env.json",
+    "start": "yarn configure-environment && react-scripts start",
+    "build": "yarn configure-environment && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -38,6 +39,7 @@
   ],
   "devDependencies": {
     "deep-freeze": "^0.0.1",
+    "dotenv": "^6.0.0",
     "prettier": "^1.14.3"
   }
 }

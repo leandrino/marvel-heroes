@@ -1,11 +1,5 @@
 const HttpRequestSetup = config => {
-  const userToken = '';
-
-  const requestHeaders = {
-    headers: {
-      Authorization: `Bearer ${userToken}`
-    }
-  };
+  const requestHeaders = {};
 
   return Object.assign(config, { ...requestHeaders });
 };
