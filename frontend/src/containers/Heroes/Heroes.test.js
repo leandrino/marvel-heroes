@@ -15,13 +15,22 @@ describe("Heroes.service.js", () => {
       expect(listHeroesService).toBeDefined();
     });
 
-    it("should listHeroesService call correct url", async () => {
+    it("should listHeroesService without terms call correct url", async () => {
       expect.assertions(1);
       const { listHeroesService } = require("./Heroes.service");
       await listHeroesService(10, 10).then(data =>
         expect(data.url).toEqual("/characters?limit=10&offset=10&")
       );
     });
+
+    it("should listHeroesService with terms call correct url", async () => {
+      expect.assertions(1);
+      const { listHeroesService } = require("./Heroes.service");
+      await listHeroesService(10, 10, 'asd').then(data =>
+        expect(data.url).toEqual("/characters?limit=10&offset=10&nameStartsWith=asd&")
+      );
+    });
+    
     it("should listHeroesService call correct url", async () => {
       expect.assertions(1);
       const { getHeroService } = require("./Heroes.service");

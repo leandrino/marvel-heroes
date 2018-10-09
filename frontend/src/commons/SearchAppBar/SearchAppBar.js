@@ -10,6 +10,7 @@ import { withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import { connect } from "react-redux";
+import { fetchHeroesList } from "../../redux-flow/reducers/heroes/action-creators";
 
 const styles = theme => ({
   root: {
@@ -110,6 +111,10 @@ function SearchAppBar(props) {
             <Input
               placeholder="Search…"
               disableUnderline
+              onKeyUp={e => {
+                const value = e.target.value;
+                return props.searchHero(value)
+              }}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput
@@ -128,7 +133,7 @@ SearchAppBar.propTypes = {
 
 const mapDispathToProps = dispatch => ({
   searchHero: term => {
-    console.log(term);
+    dispatch(fetchHeroesList(10, 0, term))
   }
 });
 

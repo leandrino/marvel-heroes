@@ -6,9 +6,9 @@ import { HERO, LIST_HEROES, PAGINATION } from "./actions";
 import { FETCHING_HEROES } from "../ui/actions";
 import { push } from "connected-react-router";
 
-export const fetchHeroesList = (limit, offset) => async dispatch => {
+export const fetchHeroesList = (limit, offset, term) => async dispatch => {
   dispatch({ type: FETCHING_HEROES });
-  const response = await listHeroesService(limit, offset);
+  const response = await listHeroesService(limit, offset, term);
   dispatch({ type: LIST_HEROES, payload: response.results });
   dispatch({
     type: PAGINATION,

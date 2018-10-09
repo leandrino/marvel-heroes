@@ -53,8 +53,8 @@ class Hero extends PureComponent {
           <div>
             <List>
               {hero.series &&
-                hero.series.items.map(item => (
-                  <ListItem>
+                hero.series.items.map((item, index) => (
+                  <ListItem key={`series-${item.name}-${index}`}>
                     <ListItemText
                       primary={item.name}
                       secondary={item.resourceURI}
