@@ -9,6 +9,7 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
+import { connect } from "react-redux";
 
 const styles = theme => ({
   root: {
@@ -125,4 +126,13 @@ SearchAppBar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SearchAppBar);
+const mapDispathToProps = dispatch => ({
+  searchHero: term => {
+    console.log(term);
+  }
+});
+
+export default connect(
+  null,
+  mapDispathToProps
+)(withStyles(styles)(SearchAppBar));
