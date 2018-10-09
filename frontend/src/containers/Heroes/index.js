@@ -1,1 +1,1 @@
-export { default } from "./Heroes";
+export { default } from "./Heroes.routes";

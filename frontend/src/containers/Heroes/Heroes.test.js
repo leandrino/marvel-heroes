@@ -22,5 +22,12 @@ describe("Heroes.service.js", () => {
         expect(data.url).toEqual("/characters?limit=10&offset=10&")
       );
     });
+    it("should listHeroesService call correct url", async () => {
+      expect.assertions(1);
+      const { getHeroService } = require("./Heroes.service");
+      await getHeroService(10).then(data =>
+        expect(data.url).toEqual("/characters/10?")
+      );
+    });
   });
 });

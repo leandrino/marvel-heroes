@@ -1,2 +1,3 @@
-export const LIST_HEROES = "Heroes:LIST_HEROES";
-export const PAGINATION = 'Heroes:PAGINATION';
+export const LIST_HEROES = "heroes:LIST_HEROES";
+export const PAGINATION = "heroes:PAGINATION";
+export const HERO = "hero:HERO";

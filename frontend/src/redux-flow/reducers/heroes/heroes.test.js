@@ -1,6 +1,6 @@
 import deepFreeze from "deep-freeze";
 import heroes from "./index";
-import { LIST_HEROES, PAGINATION } from "./actions";
+import { HERO, LIST_HEROES, PAGINATION } from "./actions";
 
 describe("Heroes Reducer", () => {
   it("should list heroes", () => {
@@ -30,6 +30,13 @@ describe("Heroes Reducer", () => {
         total: 1
       }
     };
+
+    expect(heroes(before, action)).toEqual(after);
+  });
+  it("should store a hero", () => {
+    const before = deepFreeze({});
+    const action = deepFreeze({ type: HERO, payload: { id: 1 } });
+    const after = { hero: { id: 1 } };
 
     expect(heroes(before, action)).toEqual(after);
   });

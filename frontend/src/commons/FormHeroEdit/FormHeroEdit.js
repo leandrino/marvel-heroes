@@ -1,7 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Form, Field } from "react-final-form";
 import TextFieldForm from "../TextFieldForm";
-import PaperDefault from "../PaperDefault/PaperDefault";
+import Button from "@material-ui/core/Button/Button";
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -23,50 +24,52 @@ const validate = values => {
   return errors;
 };
 
-const FormHeroEdit = () => (
-  <PaperDefault>
-    <Form
-      onSubmit={onSubmit}
-      initialValues={{ employed: true, stooge: "larry" }}
-      validate={validate}
-      render={({ handleSubmit, reset, submitting, pristine, values }) => (
-        <form onSubmit={handleSubmit}>
-          <div>
-            <Field name="id" component={TextFieldForm} type="text" label="Id" />
-          </div>
-          <div>
-            <Field
-              name="name"
-              component={TextFieldForm}
-              type="text"
-              label="Name"
-            />
-          </div>
-          <div>
-            <Field
-              name="description"
-              component={TextFieldForm}
-              type="text"
-              label="description"
-            />
-          </div>
-          <div className="buttons">
-            <button type="submit" disabled={submitting || pristine}>
-              Salvar
-            </button>
-            <button
-              type="button"
-              onClick={reset}
-              disabled={submitting || pristine}
-            >
-              Cancelar
-            </button>
-          </div>
-          <pre>{JSON.stringify(values, 0, 2)}</pre>
-        </form>
-      )}
-    />
-  </PaperDefault>
+const FormHeroEdit = ({ hero }) => (
+  <Form
+    onSubmit={onSubmit}
+    initialValues={hero}
+    validate={validate}
+    render={({ handleSubmit, reset, submitting, pristine, values }) => (
+      <form onSubmit={handleSubmit}>
+        <div style={{ width: "300px" }}>
+          <Field
+            fullWidth
+            name="id"
+            component={TextFieldForm}
+            type="text"
+            label="Id"
+          />
+        </div>
+        <div style={{ width: "300px" }}>
+          <Field
+            name="name"
+            component={TextFieldForm}
+            type="text"
+            label="Name"
+            fullWidth
+          />
+        </div>
+        <div style={{ width: "300px" }}>
+          <Field
+            name="description"
+            component={TextFieldForm}
+            type="text"
+            label="description"
+            fullWidth
+          />
+        </div>
+        <div style={{ width: "300px" }}>
+          <Button type="submit" disabled={submitting || pristine}>
+            Save
+          </Button>
+        </div>
+      </form>
+    )}
+  />
 );
 
-export default FormHeroEdit;
+const mapStateToProps = state => ({
+  hero: state.heroes.hero
+});
+
+export default connect(mapStateToProps)(FormHeroEdit);

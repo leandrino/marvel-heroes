@@ -1,9 +1,10 @@
 import createReducer from "../create-reducer";
-import { LIST_HEROES, PAGINATION } from "./actions";
+import { HERO, LIST_HEROES, PAGINATION } from "./actions";
 
 const initialState = {
   list: [],
-  pagination: {}
+  pagination: {},
+  hero: {}
 };
 
 const heroes = createReducer(initialState, {
@@ -14,6 +15,12 @@ const heroes = createReducer(initialState, {
   [PAGINATION]: (state, action) => ({
     ...state,
     pagination: {
+      ...action.payload
+    }
+  }),
+  [HERO]: (state, action) => ({
+    ...state,
+    hero: {
       ...action.payload
     }
   })

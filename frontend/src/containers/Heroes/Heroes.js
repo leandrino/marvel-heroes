@@ -8,7 +8,10 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import PaperDefault from "../../commons/PaperDefault/PaperDefault";
-import { fetchHeroesList } from "../../redux-flow/reducers/heroes/action-creators";
+import {
+  fetchHeroesList,
+  getHeroDetails
+} from "../../redux-flow/reducers/heroes/action-creators";
 import GridList from "@material-ui/core/GridList/GridList";
 import GridListTile from "@material-ui/core/GridListTile/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar/GridListTileBar";
@@ -33,17 +36,13 @@ const styles = theme => ({
 });
 
 class Heroes extends React.Component {
-  componentDidMount() {
-    return this.props.fetchHeroes();
-  }
-
   handleChangePage = offset => {
     const limit = this.props.pagination.limit;
     this.props.fetchHeroes(limit, offset);
   };
 
   render() {
-    const { classes, heroes } = this.props;
+    const { classes, heroes, getHero } = this.props;
     return (
       <PaperDefault className={classes.root}>
         <div>
@@ -94,7 +93,7 @@ class Heroes extends React.Component {
         <GridList cellHeight={420} className={classes.gridList}>
           {heroes.map(hero => {
             return (
-              <GridListTile key={hero.id}>
+              <GridListTile key={hero.id} onClick={() => getHero(hero.id)}>
                 <img
                   src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
                   alt={hero.name}
@@ -107,6 +106,7 @@ class Heroes extends React.Component {
             );
           })}
         </GridList>
+        {heroes.length === 0 && <p>No data</p>}
       </PaperDefault>
     );
   }
@@ -124,6 +124,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchHeroes: (limit, offset) => {
     dispatch(fetchHeroesList(limit, offset));
+  },
+
+  getHero: id => {
+    dispatch(getHeroDetails(id));
   }
 });
 
