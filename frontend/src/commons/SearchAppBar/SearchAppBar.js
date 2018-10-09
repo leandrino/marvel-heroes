@@ -113,7 +113,7 @@ function SearchAppBar(props) {
               disableUnderline
               onKeyUp={e => {
                 const value = e.target.value;
-                return props.searchHero(value)
+                return props.searchHero(value);
               }}
               classes={{
                 root: classes.inputRoot,
@@ -133,7 +133,7 @@ SearchAppBar.propTypes = {
 
 const mapDispathToProps = dispatch => ({
   searchHero: term => {
-    dispatch(fetchHeroesList(10, 0, term))
+    dispatch(fetchHeroesList(10, 0, term));
   }
 });
 
