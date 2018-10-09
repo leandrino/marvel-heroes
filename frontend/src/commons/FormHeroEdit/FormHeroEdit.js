@@ -24,7 +24,7 @@ const validate = values => {
   return errors;
 };
 
-const FormHeroEdit = ({ hero }) => (
+export const FormHeroEdit = ({ hero }) => (
   <Form
     onSubmit={onSubmit}
     initialValues={hero}

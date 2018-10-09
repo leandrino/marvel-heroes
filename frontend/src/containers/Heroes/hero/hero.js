@@ -3,7 +3,6 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { getHeroDetails } from "../../../redux-flow/reducers/heroes/action-creators";
 import PaperDefault from "../../../commons/PaperDefault/PaperDefault";
-import Grid from "@material-ui/core/Grid/Grid";
 import Avatar from "@material-ui/core/Avatar/Avatar";
 import FormHeroEdit from "../../../commons/FormHeroEdit/FormHeroEdit";
 import List from "@material-ui/core/List/List";
