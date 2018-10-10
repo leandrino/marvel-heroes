@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -9,8 +10,8 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
-import { connect } from "react-redux";
 import { fetchHeroesList } from "../../redux-flow/reducers/heroes/action-creators";
+import LinearProgressCustom from "../LinearProgressCustom/LinearProgressCustom";
 
 const styles = theme => ({
   root: {
@@ -77,9 +78,10 @@ const styles = theme => ({
 });
 
 function SearchAppBar(props) {
-  const { classes } = props;
+  const { classes, fetchingHeroes } = props;
   return (
     <div className={classes.root}>
+      {fetchingHeroes && <LinearProgressCustom />}
       <AppBar
         classes={{
           colorDefault: classes.colorDefaultAppBar
@@ -128,8 +130,13 @@ function SearchAppBar(props) {
 }
 
 SearchAppBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  fetchingHeroes: PropTypes.bool
 };
+
+const mapStateToProps = state => ({
+  fetchingHeroes: state.ui.fetchingHeroes
+});
 
 const mapDispathToProps = dispatch => ({
   searchHero: term => {
@@ -138,6 +145,6 @@ const mapDispathToProps = dispatch => ({
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispathToProps
 )(withStyles(styles)(SearchAppBar));

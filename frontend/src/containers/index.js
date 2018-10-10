@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import { connect } from "react-redux";
 import Loadable from "react-loadable";
 import LinearProgressCustom from "../commons/LinearProgressCustom/LinearProgressCustom";
 
@@ -19,9 +18,8 @@ const LoadableAppBar = Loadable({
   loading: LinearProgressCustom
 });
 
-const Containers = ({ fetchingHeroes }) => (
+const Containers = () => (
   <Fragment>
-    {fetchingHeroes && <LinearProgressCustom />}
     <header>
       <LoadableAppBar />
     </header>
@@ -37,8 +35,4 @@ const Containers = ({ fetchingHeroes }) => (
   </Fragment>
 );
 
-const mapStateToProps = state => ({
-  fetchingHeroes: state.ui.fetchingHeroes
-});
-
-export default connect(mapStateToProps)(Containers);
+export default Containers;
